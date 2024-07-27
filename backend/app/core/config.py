@@ -7,5 +7,7 @@ class Settings:
     VAPI_API_KEY: str = os.environ.get("VAPI_API_KEY", "ba5d2083-8501-4af5-8e57-7d48456ad979")
     VAPI_ASSISTANT_ID: str = os.environ.get("VAPI_ASSISTANT_ID", "d79b1e69-46bb-4ac3-983c-e3efd9a40269")
 
+    GROQ_MODEL: str = "llama-3.1-8b-instant"
+
 
 settings = Settings()

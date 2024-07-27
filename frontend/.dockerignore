@@ -1,0 +1,22 @@
+# Node modules
+node_modules/
+
+# Next.js build output
+.next/
+
+# Logs
+npm-debug.log
+yarn-error.log
+
+# Development files
+*.swp
+*~
+.DS_Store
+
+# Environment files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+package-lock.json

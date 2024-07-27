@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+.browser-mockup {
+  position: relative;
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 0.5rem;
+  padding-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.browser-mockup::before {
+  content: '';
+  display: block;
+  height: 1rem;
+  background: #dee2e6;
+  border-bottom: 1px solid #dee2e6;
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.browser-mockup::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  width: 0.75rem;
+  height: 0.75rem;
+  background: #f00;
+  border-radius: 50%;
+  box-shadow: 1.5rem 0 0 #ff0, 3rem 0 0 #0f0;
+}

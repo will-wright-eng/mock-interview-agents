@@ -9,13 +9,23 @@ router = r = APIRouter(
     prefix="/vapi",
 )
 
+sample_assistant_overrides = {
+    "variableValues": {
+        "jobDescription": "This is a sample job description",
+        "jobName": "Software Engineer",
+        "companyName": "Groq",
+        "questionBank": "Sample job bank"
+    }
+}
 
 @r.post("/start")
 async def start_vapi(request: Request):
     vapi = request.app.state.vapi
 
     # Get the assistant overrides from the request body
-    assistant_overrides = await request.json()
+    # TODO: fix this later
+    # assistant_overrides = await request.json()
+    assistant_overrides = sample_assistant_overrides
 
     # Redirect stdout to capture the output
     old_stdout = sys.stdout

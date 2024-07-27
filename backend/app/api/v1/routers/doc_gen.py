@@ -1,15 +1,14 @@
-from groq import Groq
-from fastapi import APIRouter
+from fastapi import APIRouter, Request
 from pydantic import BaseModel
 
 from app.core.config import settings
+from app.core.log import logger
 from app.prompts.prompts import *
+
 
 router = r = APIRouter(
     prefix="/doc_gen",
 )
-
-MODEL = "llama3.1-70b-versatile"
 
 
 class ChatRequest(BaseModel):
@@ -22,9 +21,7 @@ class ChatResponse(BaseModel):
 
 @r.post("/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest):
-    client = Groq(
-        api_key=settings.GROQ_API_KEY,
-    )
+    client = request.app.state.groq
     chat_completion = client.chat.completions.create(
         messages=[
             {
@@ -32,7 +29,7 @@ async def chat(request: ChatRequest):
                 "content": request.content,
             },
         ],
-        model=MODEL,
+        model=settings.GROQ_MODEL,
     )
     return ChatResponse(response=chat_completion.choices[0].message.content)
 
@@ -40,19 +37,36 @@ async def chat(request: ChatRequest):
 class DocGenRequest(BaseModel):
     type: str = "questions"
 
+@r.post("/generate_questions_and_rubric")
+async def generate_questions_and_rubric(request: Request):
+    client = request.app.state.groq
+    data = await request.json()
+    # Extract job_title and cv from the data
+    job_title = data.get("job_title")
+    cv = data.get("cv")
 
-@r.post("/generate_questions")
-async def generate_doc(request: DocGenRequest):
-    if request.type == "questions":
-        request_content = question_gen_prompt
-    elif request.type == "rubric":
-        request_content = rubric_gen_prompt
-    else:
-        raise ValueError(f"Invalid type: {request.type}")
+    formatted_request_content = f"Job title: {job_title}\n\n{job_description_prompt.get('system')}\n\nCV:\n{cv}"
+    logger.info(f"Formatted request content: {formatted_request_content}")
 
-    client = Groq(
-        api_key=settings.GROQ_API_KEY,
+    questions_completion = client.chat.completions.create(
+        messages=[
+            {
+                "role": "user",
+                "content": formatted_request_content,
+            },
+        ],
+        model=settings.GROQ_MODEL,
     )
+    questions = questions_completion.choices[0].message.content
+    return {"questions": questions}
+
+
+@r.post("/generate_cv")
+async def generate_cv(request: Request, job_title: str):
+    client = request.app.state.groq
+    request_content = cv_gen_prompt.format(JOB_TITLE=job_title)
+    logger.info(f"Request content: {request_content}")
+
     questions_completion = client.chat.completions.create(
         messages=[
             {
@@ -60,10 +74,9 @@ async def generate_doc(request: DocGenRequest):
                 "content": request_content,
             },
         ],
-        model=MODEL,
+        model=settings.GROQ_MODEL,
     )
-    questions = [choice.message.content for choice in questions_completion.choices]
-    return {"questions": questions}
+    return {"cv": questions_completion.choices[0].message.content}
 
 class ReportCardRequest(BaseModel):
     question_bank: str
@@ -90,7 +103,8 @@ async def generate_report_card(request: ReportCardRequest):
                 "content": content,
             },
         ],
-        model=MODEL,
+        model=settings.GROQ_MODEL,
     )
     report_card = report_card_completion.choices[0].message.content
     return {"report_card": report_card}
+
