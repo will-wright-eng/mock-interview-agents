@@ -19,3 +19,8 @@ def project():
 @r.get("/port")
 def project():
     return {"Hello": str(PORT)}
+
+# endpoint to prompt groq api
+@r.post("/doc_gen")
+def doc_gen(prompt: str):
+    return {"Hello": prompt}
