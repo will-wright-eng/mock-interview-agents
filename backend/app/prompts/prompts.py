@@ -40,6 +40,97 @@ Include an overall rubric for the interview as well:
    F (0-59%): [Description]
 
 Ensure that your questions, grading criteria, and overall rubric are tailored to the specific job description provided. Focus on assessing the key skills, experiences, and qualities mentioned in the job posting.
+
+Return your response as a JSON string, using the following JSON structure as an example. Do NOT include any other text, only the raw JSON:
+{
+  "interviewQuestions": [
+    {
+      "question": "Can you describe a time when you had to optimize the performance of a system or application? What was your approach, and what was the outcome?",
+      "keyPoints": [
+        "Identified performance bottlenecks",
+        "Implemented optimization techniques",
+        "Measured and quantified improvements",
+        "Collaborated with team members"
+      ],
+      "skillsToDemo": ["System Optimization", "Problem-solving", "Attention to Detail"],
+      "scoring": {
+        "5": "Excellent: Demonstrates deep understanding of performance optimization techniques, provides specific examples with measurable outcomes, and shows collaborative problem-solving skills.",
+        "4": "Good: Provides a clear example of performance optimization with some measurable results, but may lack depth in some areas.",
+        "3": "Average: Describes a basic performance optimization scenario but lacks specific details or significant measurable outcomes.",
+        "2": "Below Average: Provides a vague or irrelevant example of performance optimization without clear results.",
+        "1": "Poor: Unable to provide an example of performance optimization or demonstrates a lack of understanding of the concept."
+      }
+    },
+    {
+      "question": "Tell me about a time when you had to write code for a complex API. How did you ensure its simplicity and effectiveness?",
+      "keyPoints": [
+        "Understood API requirements",
+        "Designed clear and intuitive endpoints",
+        "Implemented error handling and informative messages",
+        "Documented the API thoroughly"
+      ],
+      "skillsToDemo": ["Software Development", "API Design", "Attention to Detail"],
+      "scoring": {
+        "5": "Excellent: Demonstrates strong API design principles, emphasizes simplicity and effectiveness, provides specific examples of error handling and documentation.",
+        "4": "Good: Describes a well-designed API with consideration for simplicity, but may lack depth in one area (e.g., error handling or documentation).",
+        "3": "Average: Provides a basic example of API development but lacks emphasis on simplicity or effectiveness.",
+        "2": "Below Average: Gives a vague description of API development without addressing simplicity or effectiveness.",
+        "1": "Poor: Unable to provide an example of API development or shows a lack of understanding of API design principles."
+      }
+    },
+  ],
+  "overallRubric": {
+    "evaluationCriteria": [
+      {
+        "criterion": "Technical Skills",
+        "description": "Demonstrates strong software development abilities, system optimization skills, and API design knowledge.",
+        "weighting": 0.3
+      },
+      {
+        "criterion": "Problem-solving and Decision-making",
+        "description": "Shows ability to analyze complex problems, make informed decisions, and implement effective solutions.",
+        "weighting": 0.25
+      },
+      {
+        "criterion": "Learning Agility and Curiosity",
+        "description": "Exhibits enthusiasm for learning new technologies and approaches, with a growth mindset.",
+        "weighting": 0.2
+      },
+      {
+        "criterion": "Collaboration and Communication",
+        "description": "Demonstrates strong teamwork skills, clear communication, and ability to work effectively in a remote environment.",
+        "weighting": 0.15
+      },
+      {
+        "criterion": "Alignment with Company Values",
+        "description": "Shows humility, passion for AI and technology, and alignment with Groq's mission and culture.",
+        "weighting": 0.1
+      }
+    ],
+    "finalGradingScale": {
+      "A": {
+        "range": "90-100%",
+        "description": "Exceptional candidate who excels in all areas and shows strong potential to make significant contributions to Groq."
+      },
+      "B": {
+        "range": "80-89%",
+        "description": "Strong candidate who demonstrates proficiency in most areas and aligns well with Groq's needs and culture."
+      },
+      "C": {
+        "range": "70-79%",
+        "description": "Competent candidate who meets basic requirements but may need development in some areas."
+      },
+      "D": {
+        "range": "60-69%",
+        "description": "Candidate who falls short in multiple areas and may not be a good fit for the role or company culture."
+      },
+      "F": {
+        "range": "0-59%",
+        "description": "Candidate who does not meet the minimum requirements for the position and is not recommended for further consideration."
+      }
+    }
+  }
+}
 """
 }
 
@@ -48,7 +139,7 @@ report_card_prompt = {
 
 You are an AI assistant tasked with grading a mock interview based on a provided transcript, question bank, answer rubrics, and overall rubrics. Your goal is to provide a comprehensive report card that will help the candidate improve their interview skills. Follow these instructions carefully:
 
-1. First, you will be given the interview transcript. Read it carefully to understand the flow of the conversation and the candidate's responses.
+1. First, you will be given a job description and the interview transcript. Read both carefully to understand the flow of the conversation and the candidate's responses.
 
 2. Next, you will be provided with the question bank. This contains the questions that were asked during the interview. The interview typically begins with introductions and some biographical information. You should also grade the candidate on these responses.
 
@@ -322,3 +413,8 @@ Compensation
 
 $160K – $385K
 """
+
+
+
+sample_q = [ { "question": "Can you describe a time when you optimized the performance of a system or application? What was your approach, and what was the outcome?", "keyPoints": [ "Identified performance bottlenecks", "Implemented optimization techniques", "Measured and quantified improvements", "Collaborated with team members" ], "skillsToDemo": [ "System Optimization", "Problem-solving", "Attention to Detail" ], "scoring": { "1": "Poor: Unable to provide an example of performance optimization or demonstrates a lack of understanding of the concept.", "2": "Below Average: Provides a vague or irrelevant example of performance optimization without clear results.", "3": "Average: Describes a basic performance optimization scenario but lacks specific details or significant measurable outcomes.", "4": "Good: Provides a clear example of performance optimization with some measurable results, but may lack depth in some areas.", "5": "Excellent: Demonstrates deep understanding of performance optimization techniques, provides specific examples with measurable outcomes, and shows collaborative problem-solving skills." } }, { "question": "Tell me about a time when you wrote code for a complex API. How did you ensure its simplicity and effectiveness?", "keyPoints": [ "Understood API requirements", "Designed clear and intuitive endpoints", "Implemented error handling and informative messages", "Documented the API thoroughly" ], "skillsToDemo": [ "Software Development", "API Design", "Attention to Detail" ], "scoring": { "1": "Poor: Unable to provide an example of API development or shows a lack of understanding of API design principles.", "2": "Below Average: Gives a vague description of API development without addressing simplicity or effectiveness.", "3": "Average: Provides a basic example of API development but lacks emphasis on simplicity or effectiveness.", "4": "Good: Describes a well-designed API with consideration for simplicity, but may lack depth in one area (e.g., error handling or documentation).", "5": "Excellent: Demonstrates strong API design principles, emphasizes simplicity and effectiveness, provides specific examples of error handling and documentation." } }, { "question": "Can you describe a time when you received and acted on feedback from colleagues or customers? How did you incorporate their suggestions into your work?", "keyPoints": [ "Received feedback from colleagues or customers", "Acted on feedback by making changes", "Incorporated feedback into future work", "Communicated changes to the team" ], "skillsToDemo": [ "Communication", "Collaboration", "Emotional Intelligence" ], "scoring": { "1": "Poor: Unable to provide an example of receiving and responding to feedback or shows a lack of understanding of its importance.", "2": "Below Average: Gives a vague description of receipt and response to feedback without clear implementation or improvement.", "3": "Average: Describes a basic scenario of receiving and responding to feedback but lacks specific implementation or follow-through.", "4": "Good: Provides a clear example of incorporating feedback and making improvements, but may lack significant communication or process changes.", "5": "Excellent: Demonstrates strong ability to incorporate feedback, communicate changes clearly, and improve processes." } }, { "question": "Can you describe a time when you advocated for a solution that required making a trade-off between competing priorities?", "keyPoints": [ "Identified conflicting priorities", "Advocated for a solution that addressed multiple priorities", "Communicated and justified the trade-off", "Implemented the solution" ], "skillsToDemo": [ "Decision-making", "Communication", "Problem-solving" ], "scoring": { "1": "Poor: Unable to provide an example of advocating for a trade-off or shows a lack of understanding of its importance.", "2": "Below Average: Gives a vague description of trade-off without clear details or justifications.", "3": "Average: Describes a basic scenario of making a trade-off between competing priorities but lacks specific details or justifications.", "4": "Good: Provides a clear example of advocating for a solution and communicating the trade-off, but may lack complete justification.", "5": "Excellent: Demonstrates strong decision-making, communication, and problem-solving skills, with clear justification for the trade-off." } }, { "question": "Can you describe a time when you took initiative to solve a complex problem or implement a new idea?", "keyPoints": [ "Identified a problem or opportunity", "Developed a plan to address the problem or implement the idea", "Implemented the solution", "Communicated results to the team" ], "skillsToDemo": [ "Initiative", "Problem-solving", "Communication" ], "scoring": { "1": "Poor: Unable to provide an example of taking initiative or shows a lack of understanding of its importance.", "2": "Below Average: Gives a vague description of taking initiative without clear details or results.", "3": "Average: Describes a basic scenario of taking initiative but lacks specific details or results.", "4": "Good: Provides a clear example of taking initiative and implementing a solution, but may lack significant communication or results.", "5": "Excellent: Demonstrates strong initiative, problem-solving, and communication skills, with clear results and follow-through." } }, { "question": "Can you describe a time when you received and successfully implemented feedback from a mentor or manager?", "keyPoints": [ "Received feedback from a mentor or manager", "Acted on feedback by making changes", "Implemented feedback into future work", "Communicated changes to the team" ], "skillsToDemo": [ "Emotional Intelligence", "Collaboration", "Communication" ], "scoring": { "1": "Poor: Unable to provide an example of receiving and responding to feedback or shows a lack of understanding of its importance.", "2": "Below Average: Gives a vague description of receipt and response to feedback without clear implementation or improvement.", "3": "Average: Describes a basic scenario of receiving and responding to feedback but lacks specific implementation or follow-through.", "4": "Good: Provides a clear example of incorporating feedback and making improvements, but may lack significant communication or process changes.", "5": "Excellent: Demonstrates strong ability to incorporate feedback, communicate changes clearly, and improve processes." } }, { "question": "Can you describe a time when you contributed to a team effort to develop and launch a new product or feature?", "keyPoints": [ "Participated in team planning and coordination", "Contributed to the development of the product or feature", "Assisted with testing and validation", "Communicated with stakeholders" ], "skillsToDemo": [ "Collaboration", "Communication", "Problem-solving" ], "scoring": { "1": "Poor: Unable to provide an example of participating in a team effort or shows a lack of understanding of its importance.", "2": "Below Average: Gives a vague description of participating in a team effort without clear details or results.", "3": "Average: Describes a basic scenario of participating in a team effort but lacks specific details or results.", "4": "Good: Provides a clear example of contributing to a team effort and implementing the product or feature, but may lack significant communication or results.", "5": "Excellent: Demonstrates strong collaboration, communication, and problem-solving skills, with clear results and follow-through." } } ]
+sample_overall = { "evaluationCriteria": [ { "criterion": "Technical Skills", "description": "Demonstrates strong software development abilities, system optimization skills, and API design knowledge.", "weighting": 0.3 }, { "criterion": "Problem-solving and Decision-making", "description": "Shows ability to analyze complex problems, make informed decisions, and implement effective solutions.", "weighting": 0.25 }, { "criterion": "Learning Agility and Curiosity", "description": "Exhibits enthusiasm for learning new technologies and approaches, with a growth mindset.", "weighting": 0.2 }, { "criterion": "Collaboration and Communication", "description": "Demonstrates strong teamwork skills, clear communication, and ability to work effectively in a remote environment.", "weighting": 0.15 }, { "criterion": "Initiative and Adaptability", "description": "Shows ability to take initiative, adapt to new situations, and prioritize tasks effectively.", "weighting": 0.1 } ], "finalGradingScale": { "A": { "range": "90-100%", "description": "Exceptional candidate who excels in all areas and shows strong potential to make significant contributions to Groq." }, "B": { "range": "80-89%", "description": "Strong candidate who demonstrates proficiency in most areas and aligns well with Groq's needs and culture." }, "C": { "range": "70-79%", "description": "Competent candidate who meets basic requirements but may need development in some areas." }, "D": { "range": "60-69%", "description": "Candidate who falls short in multiple areas and may not be a good fit for the role or company culture." }, "F": { "range": "0-59%", "description": "Candidate who does not meet the minimum requirements for the position and is not recommended for further consideration." } } }
