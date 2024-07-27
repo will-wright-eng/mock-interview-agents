@@ -4,6 +4,7 @@ from fastapi import FastAPI, Request
 from .core.config import settings
 from .core.log import logger
 from .api.v1.routers.test import router
+from .api.v1.routers.doc_gen import router
 
 
 app = FastAPI(title=settings.PROJECT_NAME, docs_url="/api/docs", openapi_url="/api")
@@ -31,3 +32,9 @@ app.include_router(
     prefix="/api/v1",
     tags=["test"]
 )
+app.include_router(
+    router,
+    prefix="/api/v1",
+    tags=["doc_gen"]
+)
+
