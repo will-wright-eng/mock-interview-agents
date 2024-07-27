@@ -1,22 +1,85 @@
 import { useState } from 'react';
 import Layout from '../components/Layout';
+import MdDisplay from '../components/MdDisplay'; // Import the new component
 
 export default function Home() {
   const [dreamJob, setDreamJob] = useState('');
+  const [cvContent, setCvContent] = useState('');
+  const [questions, setQuestions] = useState('');
+  const [isReadyForInterview, setIsReadyForInterview] = useState(false);
+  const [conversationState, setConversationState] = useState('inactive'); // New state for conversation
+
+  const generateCV = async () => {
+    const response = await fetch(`http://127.0.0.1:8000/api/v1/doc_gen/generate_cv?job_title=${encodeURIComponent(dreamJob)}`, {
+      method: 'POST',
+      headers: {
+        'accept': 'application/json',
+      },
+      body: '',
+    });
+    const data = await response.json();
+    setCvContent(data.cv);
+    return data.cv;
+  };
+
+  const generateQuestionsAndRubric = async (cv) => {
+    const response = await fetch('http://127.0.0.1:8000/api/v1/doc_gen/generate_questions_and_rubric', {
+      method: 'POST',
+      headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ cv }),
+    });
+    const data = await response.json();
+    setQuestions(data.questions);
+    setIsReadyForInterview(true);
+  };
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/dream-job', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ job: dreamJob }),
-      });
-      const data = await response.json();
-      console.log('Response:', data);
+      const cv = cvContent || await generateCV();
+      await generateQuestionsAndRubric(cv);
     } catch (error) {
-      console.error('Error submitting dream job:', error);
+      console.error('Error in the process:', error);
+    }
+  };
+
+  const handleConversation = async () => {
+    if (conversationState === 'inactive') {
+      setConversationState('active');
+      // Initiate conversation via API
+      try {
+        const response = await fetch('http://127.0.0.1:8000/api/v1/vapi/start', {
+          method: 'POST',
+          headers: {
+            'accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ questions }),
+        });
+        const data = await response.json();
+        console.log('Conversation started:', data);
+      } catch (error) {
+        console.error('Error starting conversation:', error);
+      }
+    } else {
+      setConversationState('inactive');
+      // Stop conversation via API
+      try {
+        const response = await fetch('http://127.0.0.1:8000/api/v1/vapi/stop', {
+          method: 'POST',
+          headers: {
+            'accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({}),
+        });
+        const data = await response.json();
+        console.log('Conversation stopped:', data);
+      } catch (error) {
+        console.error('Error stopping conversation:', error);
+      }
     }
   };
 
@@ -34,7 +97,24 @@ export default function Home() {
               onChange={(e) => setDreamJob(e.target.value)}
               className="input input-bordered w-full max-w-xs mb-4"
             />
-            <button className="btn btn-primary" onClick={handleSubmit}>Submit</button>
+            <textarea
+              placeholder="Paste your CV content here... (optional)"
+              value={cvContent}
+              onChange={(e) => setCvContent(e.target.value)}
+              className="textarea textarea-bordered w-full max-w-xs mb-4"
+              rows="10"
+            />
+            <div className="flex justify-center">
+              <button className="btn btn-primary" onClick={handleSubmit}>Submit</button><br />
+              {isReadyForInterview && (
+                <button className="btn btn-secondary mt-4" onClick={handleConversation}>
+                  {conversationState === 'inactive' ? 'Start Interview' : 'Stop Interview'}
+                </button>
+              )}
+            </div>
+
+            {cvContent && <MdDisplay content={cvContent} title="Generated CV" />}
+            {questions && <MdDisplay content={questions} title="Generated Questions" />}
           </div>
         </div>
       </div>

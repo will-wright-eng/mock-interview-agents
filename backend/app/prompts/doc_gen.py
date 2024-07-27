@@ -60,7 +60,15 @@ Present your output in the following format:
 Ensure that your questions, grading criteria, and overall rubric are tailored to the specific job description provided. Focus on assessing the key skills, experiences, and qualities mentioned in the job posting.
 """
 
-swe_job_description = """Software Engineer, Full Stack
+cv_gen_prompt = """Please generate a CV for the following job title:
+
+<job_title>
+{JOB_TITLE}
+</job_title>
+
+Here is an example of a CV:
+
+Software Engineer, Full Stack
 Applied AI Engineering - San Francisco
 
 About the Team
