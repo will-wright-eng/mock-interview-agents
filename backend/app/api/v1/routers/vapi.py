@@ -11,15 +11,18 @@ router = r = APIRouter(
 
 
 @r.post("/start")
-def start_vapi(request: Request):
+async def start_vapi(request: Request):
     vapi = request.app.state.vapi
+
+    # Get the assistant overrides from the request body
+    assistant_overrides = await request.json()
 
     # Redirect stdout to capture the output
     old_stdout = sys.stdout
     sys.stdout = buffer = io.StringIO()
 
     try:
-        vapi.start(assistant_id=settings.VAPI_ASSISTANT_ID)
+        vapi.start(assistant_id=settings.VAPI_ASSISTANT_ID, assistant_overrides=assistant_overrides)
         output = buffer.getvalue()
 
         # Extract call_id from the output
