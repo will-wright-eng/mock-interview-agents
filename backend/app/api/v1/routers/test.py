@@ -1,7 +1,7 @@
 import os
 from fastapi import APIRouter
 
-from app.core import config
+from app.core.config import settings
 
 PORT = os.environ.get("TRACKING_BACKEND_PORT")
 router = r = APIRouter(
@@ -14,7 +14,7 @@ def test():
 
 @r.get("/project")
 def project():
-    return {"Hello": config.PROJECT_NAME}
+    return {"Hello": settings.PROJECT_NAME}
 
 @r.get("/port")
 def project():
