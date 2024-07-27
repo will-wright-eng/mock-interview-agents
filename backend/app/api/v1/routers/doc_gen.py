@@ -3,7 +3,7 @@ from pydantic import BaseModel
 
 from app.core.config import settings
 from app.core.log import logger
-from app.prompts.doc_gen import rubric_gen_prompt, question_gen_prompt, cv_gen_prompt
+from backend.app.prompts.prompts import rubric_gen_prompt, question_gen_prompt, cv_gen_prompt
 
 router = r = APIRouter(
     prefix="/doc_gen",
