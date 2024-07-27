@@ -3,7 +3,8 @@ from pydantic import BaseModel
 
 from app.core.config import settings
 from app.core.log import logger
-from app.prompts.prompts import cv_gen_prompt, job_description_prompt
+from app.prompts.prompts import *
+
 
 router = r = APIRouter(
     prefix="/doc_gen",
@@ -76,3 +77,34 @@ async def generate_cv(request: Request, job_title: str):
         model=settings.GROQ_MODEL,
     )
     return {"cv": questions_completion.choices[0].message.content}
+
+class ReportCardRequest(BaseModel):
+    question_bank: str
+    transcript: str
+    overall_rubric: str
+
+@r.post("/generate_report_card")
+async def generate_report_card(request: ReportCardRequest):
+    
+    client = Groq(
+        api_key=settings.GROQ_API_KEY,
+    )
+
+    content = f"Transcript: {request.transcript}\n\nQuestion Bank: {request.question_bank}\n\nOverall Rubric: {request.overall_rubric}"
+
+    report_card_completion = client.chat.completions.create(
+        messages=[
+            {
+                "role": "system",
+                "content": report_card_prompt["system"],
+            },
+            {
+                "role": "user",
+                "content": content,
+            },
+        ],
+        model=settings.GROQ_MODEL,
+    )
+    report_card = report_card_completion.choices[0].message.content
+    return {"report_card": report_card}
+
