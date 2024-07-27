@@ -3,11 +3,13 @@ from fastapi import APIRouter
 from pydantic import BaseModel
 
 from app.core.config import settings
-from backend.app.prompts.prompts import rubric_gen_prompt, question_gen_prompt
+from app.prompts.prompts import *
 
 router = r = APIRouter(
     prefix="/doc_gen",
 )
+
+MODEL = "llama3.1-70b-versatile"
 
 
 class ChatRequest(BaseModel):
@@ -30,7 +32,7 @@ async def chat(request: ChatRequest):
                 "content": request.content,
             },
         ],
-        model="llama3-8b-8192",
+        model=MODEL,
     )
     return ChatResponse(response=chat_completion.choices[0].message.content)
 
@@ -58,7 +60,37 @@ async def generate_doc(request: DocGenRequest):
                 "content": request_content,
             },
         ],
-        model="llama3-8b-8192",
+        model=MODEL,
     )
     questions = [choice.message.content for choice in questions_completion.choices]
     return {"questions": questions}
+
+class ReportCardRequest(BaseModel):
+    question_bank: str
+    transcript: str
+    overall_rubric: str
+
+@r.post("/generate_report_card")
+async def generate_report_card(request: ReportCardRequest):
+    
+    client = Groq(
+        api_key=settings.GROQ_API_KEY,
+    )
+
+    content = f"Transcript: {request.transcript}\n\nQuestion Bank: {request.question_bank}\n\nOverall Rubric: {request.overall_rubric}"
+
+    report_card_completion = client.chat.completions.create(
+        messages=[
+            {
+                "role": "system",
+                "content": report_card_prompt["system"],
+            },
+            {
+                "role": "user",
+                "content": content,
+            },
+        ],
+        model=MODEL,
+    )
+    report_card = report_card_completion.choices[0].message.content
+    return {"report_card": report_card}
