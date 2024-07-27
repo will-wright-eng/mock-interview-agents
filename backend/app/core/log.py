@@ -24,4 +24,5 @@ def get_logger(name, debug=True):
 
     return logger
 
+
 logger = get_logger(__name__)

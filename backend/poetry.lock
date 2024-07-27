@@ -169,6 +169,7 @@ files = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "daily-python"
 version = "0.10.1"
 description = "Daily Client SDK for Python"
@@ -179,6 +180,16 @@ files = [
     {file = "daily_python-0.10.1-cp37-abi3-macosx_11_0_arm64.whl", hash = "sha256:dc3ccf6993ecd91b8414fbbf660a102e5427f49d3baeadfceaa82ce109db316b"},
     {file = "daily_python-0.10.1-cp37-abi3-manylinux_2_28_aarch64.whl", hash = "sha256:ecd46e46bf31c28c0468108ea56b3831a92e80855d1ac20f6c69baeebc565a2c"},
     {file = "daily_python-0.10.1-cp37-abi3-manylinux_2_28_x86_64.whl", hash = "sha256:469a4d23b990ee907ffc5c246a8a17da863a342e9171379449698d8b50782045"},
+=======
+name = "distro"
+version = "1.9.0"
+description = "Distro - an OS platform information API"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "distro-1.9.0-py3-none-any.whl", hash = "sha256:7bffd925d65168f85027d8da9af6bddab658135b840670a223589bc0c8ef02b2"},
+    {file = "distro-1.9.0.tar.gz", hash = "sha256:2fa77c6fd8940f116ee1d6b94a2f90b13b5ea8d019b98bc8bafdcabcdd9bdbed"},
+>>>>>>> origin/main
 ]
 
 [[package]]
@@ -271,6 +282,25 @@ typer = ">=0.12.3"
 
 [package.extras]
 standard = ["fastapi", "uvicorn[standard] (>=0.15.0)"]
+
+[[package]]
+name = "groq"
+version = "0.9.0"
+description = "The official Python library for the groq API"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "groq-0.9.0-py3-none-any.whl", hash = "sha256:d0e46f4ad645504672bb09c8100af3ced3a7db0d5119dc13e4aca535fc455874"},
+    {file = "groq-0.9.0.tar.gz", hash = "sha256:130ed5e35d3acfaab46b9e7a078eeaebf91052f4a9d71f86f87fb319b5fec332"},
+]
+
+[package.dependencies]
+anyio = ">=3.5.0,<5"
+distro = ">=1.7.0,<2"
+httpx = ">=0.23.0,<1"
+pydantic = ">=1.9.0,<3"
+sniffio = "*"
+typing-extensions = ">=4.7,<5"
 
 [[package]]
 name = "h11"
@@ -1135,5 +1165,10 @@ files = [
 
 [metadata]
 lock-version = "2.0"
+<<<<<<< HEAD
 python-versions = "^3.10"
 content-hash = "f9edca2a5ff7e0fc0a9e386566daa388cf4c56d644f749388e0a532a2593a8b6"
+=======
+python-versions = "^3.12"
+content-hash = "5aa8717098d6bb6db0f7c79ee3547a2f62ea3b0219349cbbccf6c86a4706340a"
+>>>>>>> origin/main

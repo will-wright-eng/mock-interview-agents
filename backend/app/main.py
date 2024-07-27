@@ -1,14 +1,16 @@
 import os
+
 from fastapi import FastAPI, Request
 
-from .core.config import settings
 from .core.log import logger
 from .api.v1.routers.test import router
-from .api.v1.routers.vapi import router 
+from .core.config import settings
+from .api.v1.routers import test, doc_gen
 
 app = FastAPI(title=settings.PROJECT_NAME, docs_url="/api/docs", openapi_url="/api")
 
 PORT = os.environ.get("TRACKING_BACKEND_PORT")
+
 
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
@@ -17,17 +19,31 @@ async def log_requests(request: Request, call_next):
     logger.info(f"Response: {response.status_code}")
     return response
 
+
 @app.get("/api/v1")
 async def root():
     return {"message": "Hello World"}
+
 
 @app.get("/api/v1/info")
 async def info():
     return settings.model_dump()
 
+
 # Routers
 app.include_router(
-    router,
+    test.router,
     prefix="/api/v1",
-    tags=["test", "start_vapi"]
+    tags=["test"],
+)
+app.include_router(
+    doc_gen.router,
+    prefix="/api/v1",
+    tags=["doc_gen"],
+)
+
+app.include_router(
+    doc_gen.router,
+    prefix="/api/v1",
+    tags=["vapi"],
 )
