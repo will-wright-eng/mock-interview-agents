@@ -1,10 +1,11 @@
 import os
 
 from fastapi import FastAPI, Request
+from vapi_python import Vapi
 
 from .core.log import logger
 from .core.config import settings
-from .api.v1.routers import test, doc_gen
+from .api.v1.routers import test, vapi, doc_gen
 
 app = FastAPI(title=settings.PROJECT_NAME, docs_url="/api/docs", openapi_url="/api")
 
@@ -17,6 +18,12 @@ async def log_requests(request: Request, call_next):
     response = await call_next(request)
     logger.info(f"Response: {response.status_code}")
     return response
+
+
+@app.on_event("startup")
+async def startup_event():
+    logger.info("Application startup")
+    app.state.vapi = Vapi(api_key=settings.VAPI_API_KEY)
 
 
 @app.get("/api/v1")
@@ -39,4 +46,10 @@ app.include_router(
     doc_gen.router,
     prefix="/api/v1",
     tags=["doc_gen"],
+)
+
+app.include_router(
+    vapi.router,
+    prefix="/api/v1",
+    tags=["vapi"],
 )
