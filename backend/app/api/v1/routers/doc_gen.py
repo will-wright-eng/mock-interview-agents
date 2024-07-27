@@ -3,7 +3,7 @@ from pydantic import BaseModel
 
 from app.core.config import settings
 from app.core.log import logger
-from backend.app.prompts.prompts import rubric_gen_prompt, question_gen_prompt, cv_gen_prompt
+from app.prompts.prompts import cv_gen_prompt, job_description_prompt
 
 router = r = APIRouter(
     prefix="/doc_gen",
@@ -44,7 +44,7 @@ async def generate_questions_and_rubric(request: Request):
     job_title = data.get("job_title")
     cv = data.get("cv")
 
-    formatted_request_content = f"Job title: {job_title}\n\n{question_gen_prompt}\n\nCV:\n{cv}"
+    formatted_request_content = f"Job title: {job_title}\n\n{job_description_prompt.get('system')}\n\nCV:\n{cv}"
     logger.info(f"Formatted request content: {formatted_request_content}")
 
     questions_completion = client.chat.completions.create(
