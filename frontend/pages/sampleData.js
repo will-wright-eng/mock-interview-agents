@@ -41,3 +41,95 @@ Location: Groq is a geo-agnostic company, meaning you work where you are. Except
 At Groq: Our goal is to hire and promote an exceptional workforce as diverse as the global populations we serve. Groq is an equal opportunity employer committed to diversity, inclusion, and belonging in all aspects of our organization. We value and celebrate diversity in thought, beliefs, talent, expression, and backgrounds. We know that our individual differences make us better.`
 }
 export default sampleData;
+
+const sampleReportCard = {
+    questionAssessment: [
+      {
+        question:
+          "Can you tell me a little bit about your background and experience as a software engineer?",
+        justification:
+          "You provided a brief overview of your experience, including your time at Amazon and Google. However, you could have elaborated more on your specific accomplishments and skills.",
+        score: 4,
+        scoreDescription: "Good",
+      },
+      {
+        question:
+          "Can you tell me about a specific project or feature you worked on that you're particularly proud of?",
+        justification:
+          "You provided a good example of a project you worked on at Google, including the design process and launch. However, you could have elaborated more on the technical details and challenges you faced.",
+        score: 4,
+        scoreDescription: "Good",
+      },
+      {
+        question:
+          "Can you describe a project you worked on where you had to optimize the performance of a complex system? What steps did you take to identify bottlenecks? And how did you measure the impact of your changes?",
+        justification:
+          "You provided a clear and concise description of a project you worked on, including the steps you took to optimize performance and measure impact. You demonstrated good problem-solving and analytical thinking skills.",
+        score: 5,
+        scoreDescription: "Excellent",
+      },
+      {
+        question:
+          "Tell me about a time when you had to work on a team to develop a new feature or API. What was your role in the project, and how did you contribute to its success?",
+        justification:
+          "You struggled to provide a clear description of your role in the project and your contributions to its success. You could have elaborated more on your specific responsibilities and how you worked with the team.",
+        score: 2,
+        scoreDescription: "Below Average",
+      },
+      {
+        question: "Is this role remote or in person?",
+        justification:
+          "This was not a technical question, but rather a question about the role. You provided a brief answer, but could have elaborated more on your preferences and expectations.",
+        score: "N/A",
+      },
+    ],
+    overallAssessment: {
+      technicalExpertise: {
+        score: 22,
+        outOf: 30,
+        percentage: 73,
+        comments: [
+          "You demonstrated good technical expertise in your answers, particularly in the question about optimizing the performance of a complex system.",
+          "However, you struggled to provide detailed technical answers in other questions.",
+        ],
+      },
+      collaborationAndCommunication: {
+        score: 16,
+        outOf: 20,
+        percentage: 80,
+        comments: [
+          "You demonstrated good communication skills in your answers, but struggled to provide clear descriptions of your role in team projects.",
+          "You could have elaborated more on your approach to collaboration and teamwork.",
+        ],
+      },
+      problemSolvingAndAdaptability: {
+        score: 20,
+        outOf: 25,
+        percentage: 80,
+        comments: [
+          "You demonstrated good problem-solving skills in your answers, particularly in the question about optimizing the performance of a complex system.",
+          "However, you could have elaborated more on your approach to problem-solving and adaptability.",
+        ],
+      },
+      softSkills: {
+        score: 18,
+        outOf: 25,
+        percentage: 72,
+        comments: [
+          "You demonstrated good soft skills in your answers, such as humility and enthusiasm for learning.",
+          "However, you could have elaborated more on your emotional intelligence and growth mindset.",
+        ],
+      },
+    },
+    overallScore: 76,
+    grade: "B",
+    gradeDescription:
+      "Satisfactory candidate with good technical expertise, strong collaboration and communication skills, but some areas for improvement",
+    recommendations: [
+      "Practice providing clear and concise answers to technical questions.",
+      "Elaborate more on your specific accomplishments and skills in your answers.",
+      "Prepare examples of your teamwork and collaboration experiences.",
+      "Practice demonstrating your emotional intelligence and growth mindset in your answers.",
+    ],
+  };
+  
