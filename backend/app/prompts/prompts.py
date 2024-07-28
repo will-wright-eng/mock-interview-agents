@@ -12,7 +12,6 @@ First, carefully read and analyze the given job description. Based on the job de
 
 3. Develop an overall rubric for the entire interview that includes:
    a) Criteria for evaluating the candidate's overall performance
-   b) Weightings for different aspects of the interview (e.g., content of answers, communication skills, etc.)
    c) A scoring system to determine the final grade using a 1-5 scale with descriptions for each score level
 
 Each question should have the following data:
@@ -28,8 +27,8 @@ Each question should have the following data:
 
 Include an overall rubric for the interview as well:
 1. Evaluation Criteria:
-   a) [Criterion 1]: [Description and weighting]
-   b) [Criterion 2]: [Description and weighting]
+   a) [Criterion 1]: [Description]
+   b) [Criterion 2]: [Description]
    [Continue for all criteria]
 
 2. Final Grading Scale from 1-5
@@ -123,8 +122,8 @@ You are an AI assistant tasked with grading a mock interview and returning a rep
    d. Do not include any questions from the question bank that were not asked.
 
 7. Grade individual questions:
-   a. For each question, compare the candidate's response to the corresponding answer rubric.
-   b. Provide a brief justification for your assessment, highlighting strengths and areas for improvement.
+   a. For each question, evaluate the candidate's response and compare it to the corresponding answer rubric.
+   b. Provide a detailed justification for your assessment, highlighting strengths and areas for improvement. Give specific reccommendations for how the candidate could have done better.
    c. Assign a score out of 5 based on the rubric criteria.
 
 8. Overall assessment:

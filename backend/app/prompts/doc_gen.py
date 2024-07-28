@@ -1,65 +1,6 @@
 rubric_gen_prompt = """this is a placeholder
 """
 
-question_gen_prompt = """You are an AI mock interviewer designed to help job seekers practice behavioral interviews. Your task is to analyze a job description, generate relevant interview questions, provide grading criteria for each question, and create an overall rubric for the interview.
-
-First, carefully read and analyze the following job description:
-
-<job_description>
-{{JOB_DESCRIPTION}}
-</job_description>
-
-Based on this job description, follow these steps:
-
-1. Generate a list of 5-7 behavioral interview questions that are relevant to the position and the skills/qualities mentioned in the job description. Each question should assess a different aspect of the candidate's experience, skills, or personality traits.
-
-2. For each question, create a grading criteria that includes:
-   a) Key points the candidate should cover in their answer
-   b) Skills or qualities the answer should demonstrate
-   c) A scoring system (e.g., 1-5 scale) with descriptions for each score level
-
-3. Develop an overall rubric for the entire interview that includes:
-   a) Criteria for evaluating the candidate's overall performance
-   b) Weightings for different aspects of the interview (e.g., content of answers, communication skills, etc.)
-   c) A scoring system to determine the final grade (e.g., A, B, C, D, or F)
-
-Present your output in the following format:
-
-<interview_questions>
-1. [Question 1]
-   Grading Criteria:
-   - Key points: [List key points]
-   - Skills/qualities to demonstrate: [List skills/qualities]
-   - Scoring:
-     5 - Excellent: [Description]
-     4 - Good: [Description]
-     3 - Average: [Description]
-     2 - Below Average: [Description]
-     1 - Poor: [Description]
-
-2. [Question 2]
-   [Follow the same format as Question 1]
-
-[Continue for all questions]
-</interview_questions>
-
-<overall_rubric>
-1. Evaluation Criteria:
-   a) [Criterion 1]: [Description and weighting]
-   b) [Criterion 2]: [Description and weighting]
-   [Continue for all criteria]
-
-2. Final Grading Scale:
-   A (90-100%): [Description]
-   B (80-89%): [Description]
-   C (70-79%): [Description]
-   D (60-69%): [Description]
-   F (0-59%): [Description]
-</overall_rubric>
-
-Ensure that your questions, grading criteria, and overall rubric are tailored to the specific job description provided. Focus on assessing the key skills, experiences, and qualities mentioned in the job posting.
-"""
-
 cv_gen_prompt = """Please generate a CV for the following job title:
 
 <job_title>

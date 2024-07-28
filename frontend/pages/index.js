@@ -85,7 +85,6 @@ export default function Home() {
   const [reportCard, setReportCard] = useState("");
   const [interviewFinished, setInterviewFinished] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [transcript, setTranscript] = useState("");
 
   const useTemplate = () => {
     setCompany(sampleData.company);
@@ -230,7 +229,6 @@ export default function Home() {
       const transcriptData = await transcriptResponse.json();
       console.log({ transcriptData });
       let transcript = transcriptData.transcript;
-      // setTranscript(transcriptData.transcript);
       console.log({ transcript });
 
       // Generate report card
