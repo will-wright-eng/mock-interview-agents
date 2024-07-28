@@ -86,11 +86,31 @@ export default function Home() {
   const [interviewFinished, setInterviewFinished] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [transcript, setTranscript] = useState("");
+  const [selectedTemplate, setSelectedTemplate] = useState("");
 
-  const useTemplate = () => {
-    setCompany(sampleData.company);
-    setJobTitle(sampleData.jobTitle);
-    setJobDescription(sampleData.jobDescription);
+  let groqJobTitle = "Groq - Software Engineer, Developer Experience";
+  let supabaseJobTitle = "Supabase - Cloud Platform / Site Reliability Engineer";
+  let relevanceJobTitle = "Relevance AI - Lead AI Solutions Engineer";
+  let quokkaJobTitle = "Quantum Quokka Innovations - Startup SuperEnhancement Engineer";
+
+  const handleTemplateChange = (event) => {
+    const selectedValue = event.target.value;
+    setSelectedTemplate(selectedValue);
+    if (selectedValue === groqJobTitle) {
+      useTemplate(sampleData.groq);
+    } else if (selectedValue === supabaseJobTitle) {
+      useTemplate(sampleData.supabase);
+    } else if (selectedValue === relevanceJobTitle) {
+      useTemplate(sampleData.relevance);
+    } else if (selectedValue === quokkaJobTitle) {
+      useTemplate(sampleData.quokka);
+    }
+  };
+
+  const useTemplate = (templateData) => {
+    setCompany(templateData.company);
+    setJobTitle(templateData.jobTitle);
+    setJobDescription(templateData.jobDescription);
     console.log({ company, jobTitle, jobDescription });
   };
 
@@ -281,9 +301,25 @@ export default function Home() {
               Practice, improve, and ace your interviews.
             </p>
             <div>
-              <button className="btn btn-info mb-4" onClick={useTemplate}>
-                Groq - Software Engineer, Developer Experience
-              </button>
+              <select
+                className="select select-info mb-4"
+                value={selectedTemplate}
+                onChange={handleTemplateChange}
+              >
+                <option value="" disabled>Select a Template</option>
+                <option value={groqJobTitle}>
+                  {groqJobTitle}
+                </option>
+                <option value={supabaseJobTitle}>
+                  {supabaseJobTitle}
+                </option>
+                <option value={relevanceJobTitle}>
+                  {relevanceJobTitle}
+                </option>
+                <option value={quokkaJobTitle}>
+                  {quokkaJobTitle}
+                </option>
+              </select>
             </div>
             <div>
             <input
