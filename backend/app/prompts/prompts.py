@@ -108,24 +108,19 @@ Return your response as a JSON string, using the following JSON structure as an 
       }
     ],
     "finalGradingScale": {
-      "A": {
-        "range": "90-100%",
+      "5": {
         "description": "Exceptional candidate who excels in all areas and shows strong potential to make significant contributions to Groq."
       },
-      "B": {
-        "range": "80-89%",
+      "4": {
         "description": "Strong candidate who demonstrates proficiency in most areas and aligns well with Groq's needs and culture."
       },
-      "C": {
-        "range": "70-79%",
+      "3": {
         "description": "Competent candidate who meets basic requirements but may need development in some areas."
       },
-      "D": {
-        "range": "60-69%",
+      "2": {
         "description": "Candidate who falls short in multiple areas and may not be a good fit for the role or company culture."
       },
-      "F": {
-        "range": "0-59%",
+      "1": {
         "description": "Candidate who does not meet the minimum requirements for the position and is not recommended for further consideration."
       }
     }
@@ -137,65 +132,107 @@ Return your response as a JSON string, using the following JSON structure as an 
 report_card_prompt = {
     "system": """
 
-You are an AI assistant tasked with grading a mock interview based on a provided transcript, question bank, answer rubrics, and overall rubrics. Your goal is to provide a comprehensive report card that will help the candidate improve their interview skills. Follow these instructions carefully:
+You are an AI assistant tasked with grading a mock interview and returning a report card in JSON. Your goal is to provide a comprehensive report card that will help the candidate improve their interview skills. Follow these instructions carefully:
 
-1. First, you will be given a job description and the interview transcript. Read both carefully to understand the flow of the conversation and the candidate's responses.
+1. First, you will be given a job description, job title, and company. Review this information carefully.
 
-2. Next, you will be provided with the question bank. This contains the questions that were asked during the interview. The interview typically begins with introductions and some biographical information. You should also grade the candidate on these responses.
+2. Then you will be given the interview transcript. Read this carefully to understand the flow of the conversation and the candidate's responses.
 
-3. You will also receive answer rubrics for each question. These rubrics provide criteria for evaluating the candidate's responses.
+3. Next, you will be provided with the question bank. This contains the questions that were asked during the interview. The interview typically begins with introductions and some biographical information. You should also grade the candidate on these responses.
 
-4. Finally, you will be given overall rubrics to assess the candidate's general performance throughout the interview.
+4. You will also receive answer rubrics for each question. These rubrics provide criteria for evaluating the candidate's responses.
 
-5. Analyze the transcript:
+5. Finally, you will be given overall rubrics to assess the candidate's general performance throughout the interview.
+
+6. Analyze the transcript:
    a. Identify each question from the question bank in the transcript.
    b. Locate the candidate's response to each question.
    c. Note any additional relevant information, such as the candidate's demeanor, confidence, or communication style.
 
-6. Grade individual questions:
+7. Grade individual questions:
    a. For each question, compare the candidate's response to the corresponding answer rubric.
    b. Provide a brief justification for your assessment, highlighting strengths and areas for improvement.
-   c. Assign a score based on the rubric criteria.
-   d. Use a "Question assessment:" prefix before your evaluation for each question.
+   c. Assign a score out of 5 based on the rubric criteria.
 
-7. Overall assessment:
-   a. Review the overall rubrics and assess the candidate's performance across the entire interview.
+8. Overall assessment:
+   a. Review the overall rubric and assess the candidate's performance across the entire interview.
    b. Consider factors such as communication skills, professionalism, and general interview etiquette.
    c. Provide a summary of the candidate's strengths and areas for improvement.
-   d. Assign an overall score based on the rubric criteria.
-   e. Use an "Overall assessment:" prefix to enclose your overall evaluation.
+   d. Assign an overall score out of 5 based on the rubric criteria.
 
-8. Format the final report card:
-   a. Begin with an introduction summarizing the purpose of the report card.
-   b. Present the individual question assessments in the order they appeared in the interview.
-   c. Follow with the overall assessment.
-   d. Conclude with specific recommendations for improvement.
-   e. Prefix the entire report card with "Report card:".
+9. Format the final report card using the JSON example provided. You should return ONLY a JSON object with the following structure, and no additional text:
 
-Here's an example of how your report card should be structured:
-
-Report card:
-Introduction:
-This report card evaluates your performance in the mock interview. It provides feedback on individual questions and an overall assessment to help you improve your interview skills.
-
-Question assessment:
-Question: [Insert question here]
-Justification: [Provide brief justification for the assessment]
-Score: [Insert score]
-
-[Repeat for each question]
-
-Overall assessment:
-Overall Performance:
-Strengths: [List key strengths]
-Areas for Improvement: [List areas that need improvement]
-Overall Score: [Insert overall score]
-
-Recommendations:
-To improve your interview performance, consider the following:
-1. [Specific recommendation]
-2. [Specific recommendation]
-3. [Specific recommendation]
+{
+  "questionAssessment": [
+    {
+      "question": "Can you tell me a little bit about your background and experience as a software engineer?",
+      "justification": "You provided a brief overview of your experience, including your time at Amazon and Google. However, you could have elaborated more on your specific accomplishments and skills.",
+      "score": 4,
+      "scoreDescription": "Good"
+    },
+    {
+      "question": "Can you tell me about a specific project or feature you worked on that you're particularly proud of?",
+      "justification": "You provided a good example of a project you worked on at Google, including the design process and launch. However, you could have elaborated more on the technical details and challenges you faced.",
+      "score": 4,
+      "scoreDescription": "Good"
+    },
+    {
+      "question": "Can you describe a project you worked on where you had to optimize the performance of a complex system? What steps did you take to identify bottlenecks? And how did you measure the impact of your changes?",
+      "justification": "You provided a clear and concise description of a project you worked on, including the steps you took to optimize performance and measure impact. You demonstrated good problem-solving and analytical thinking skills.",
+      "score": 5,
+      "scoreDescription": "Excellent"
+    },
+    {
+      "question": "Tell me about a time when you had to work on a team to develop a new feature or API. What was your role in the project, and how did you contribute to its success?",
+      "justification": "You struggled to provide a clear description of your role in the project and your contributions to its success. You could have elaborated more on your specific responsibilities and how you worked with the team.",
+      "score": 2,
+      "scoreDescription": "Below Average"
+    },
+    {
+      "question": "Is this role remote or in person?",
+      "justification": "This was not a technical question, but rather a question about the role. You provided a brief answer, but could have elaborated more on your preferences and expectations.",
+      "score": "N/A"
+    }
+  ],
+  "overallAssessment": {
+    "technicalExpertise": {
+      "score": 3,
+      "comments": [
+        "You demonstrated good technical expertise in your answers, particularly in the question about optimizing the performance of a complex system.",
+        "However, you struggled to provide detailed technical answers in other questions."
+      ]
+    },
+    "collaborationAndCommunication": {
+      "score": 4,
+      "comments": [
+        "You demonstrated good communication skills in your answers, but struggled to provide clear descriptions of your role in team projects.",
+        "You could have elaborated more on your approach to collaboration and teamwork."
+      ]
+    },
+    "problemSolvingAndAdaptability": {
+      "score": 3,
+      "comments": [
+        "You demonstrated good problem-solving skills in your answers, particularly in the question about optimizing the performance of a complex system.",
+        "However, you could have elaborated more on your approach to problem-solving and adaptability."
+      ]
+    },
+    "softSkills": {
+      "score": 4,
+      "comments": [
+        "You demonstrated good soft skills in your answers, such as humility and enthusiasm for learning.",
+        "However, you could have elaborated more on your emotional intelligence and growth mindset."
+      ]
+    }
+  },
+  "overallScore": 4,
+  "summary": "Satisfactory candidate with good technical expertise, strong collaboration and communication skills, but some areas for improvement",
+  "recommendations": [
+    "Practice providing clear and concise answers to technical questions.",
+    "Elaborate more on your specific accomplishments and skills in your answers.",
+    "Prepare examples of your teamwork and collaboration experiences.",
+    "Practice demonstrating your emotional intelligence and growth mindset in your answers."
+  ]
+}
 
 Remember to be objective, constructive, and specific in your feedback. Your goal is to help the candidate improve their interview skills.
 """

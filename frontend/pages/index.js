@@ -3,56 +3,172 @@ import Layout from "../components/Layout";
 import MdDisplay from "../components/MdDisplay";
 import sampleData from "./sampleData";
 
-const sampleReportCard = `Report card:
+const sampleReportCard = {
+  questionAssessment: [
+    {
+      question:
+        "Can you tell me a little bit about your background and experience as a software engineer?",
+      justification:
+        "You provided a brief overview of your experience, including your time at Amazon and Google. However, you could have elaborated more on your specific accomplishments and skills.",
+      score: 4,
+      scoreDescription: "Good",
+    },
+    {
+      question:
+        "Can you tell me about a specific project or feature you worked on that you're particularly proud of?",
+      justification:
+        "You provided a good example of a project you worked on at Google, including the design process and launch. However, you could have elaborated more on the technical details and challenges you faced.",
+      score: 4,
+      scoreDescription: "Good",
+    },
+    {
+      question:
+        "Can you describe a project you worked on where you had to optimize the performance of a complex system? What steps did you take to identify bottlenecks? And how did you measure the impact of your changes?",
+      justification:
+        "You provided a clear and concise description of a project you worked on, including the steps you took to optimize performance and measure impact. You demonstrated good problem-solving and analytical thinking skills.",
+      score: 5,
+      scoreDescription: "Excellent",
+    },
+    {
+      question:
+        "Tell me about a time when you had to work on a team to develop a new feature or API. What was your role in the project, and how did you contribute to its success?",
+      justification:
+        "You struggled to provide a clear description of your role in the project and your contributions to its success. You could have elaborated more on your specific responsibilities and how you worked with the team.",
+      score: 2,
+      scoreDescription: "Below Average",
+    },
+    {
+      question: "Is this role remote or in person?",
+      justification:
+        "This was not a technical question, but rather a question about the role. You provided a brief answer, but could have elaborated more on your preferences and expectations.",
+      score: "N/A",
+    },
+  ],
+  overallAssessment: {
+    technicalExpertise: {
+      score: 22,
+      outOf: 30,
+      percentage: 73,
+      comments: [
+        "You demonstrated good technical expertise in your answers, particularly in the question about optimizing the performance of a complex system.",
+        "However, you struggled to provide detailed technical answers in other questions.",
+      ],
+    },
+    collaborationAndCommunication: {
+      score: 16,
+      outOf: 20,
+      percentage: 80,
+      comments: [
+        "You demonstrated good communication skills in your answers, but struggled to provide clear descriptions of your role in team projects.",
+        "You could have elaborated more on your approach to collaboration and teamwork.",
+      ],
+    },
+    problemSolvingAndAdaptability: {
+      score: 20,
+      outOf: 25,
+      percentage: 80,
+      comments: [
+        "You demonstrated good problem-solving skills in your answers, particularly in the question about optimizing the performance of a complex system.",
+        "However, you could have elaborated more on your approach to problem-solving and adaptability.",
+      ],
+    },
+    softSkills: {
+      score: 18,
+      outOf: 25,
+      percentage: 72,
+      comments: [
+        "You demonstrated good soft skills in your answers, such as humility and enthusiasm for learning.",
+        "However, you could have elaborated more on your emotional intelligence and growth mindset.",
+      ],
+    },
+  },
+  overallScore: 76,
+  grade: "B",
+  gradeDescription:
+    "Satisfactory candidate with good technical expertise, strong collaboration and communication skills, but some areas for improvement",
+  recommendations: [
+    "Practice providing clear and concise answers to technical questions.",
+    "Elaborate more on your specific accomplishments and skills in your answers.",
+    "Prepare examples of your teamwork and collaboration experiences.",
+    "Practice demonstrating your emotional intelligence and growth mindset in your answers.",
+  ],
+};
 
-Introduction:
-This report card evaluates your performance in the mock interview for the Software Engineer, Developer Experience position at Groq. It provides feedback on individual questions and an overall assessment to help you improve your interview skills.
+function ReportCardDisplay({ reportCardJSON }) {
+  function convertReportCardToMarkdown(reportCard) {
+    let markdown = `\n\n`;
+  
+    if (reportCard.introduction) {
+      markdown += `${reportCard.introduction}\n\n`;
+    }
+  
+    markdown += `#### Question Assessment\n\n\n\n`;
+    reportCard.questionAssessment.forEach((qa, index) => {
+      markdown += `### **Question ${index + 1}: ${qa.question}**\n\n\n\n\n\n`;
+      markdown += `**Justification:** ${qa.justification}\n\n`;
+      markdown += `**Score:** ${qa.score}${qa.scoreDescription ? ` (${qa.scoreDescription})` : ''}\n\n`;
+      markdown += `---\n\n`; // Add a horizontal line between questions
+    });
+    markdown += `## Overall Assessment\n\n`;
 
-Question assessment:
-Question: Can you describe a time when you had to optimize the performance of a system or application? What was your approach, and what was the outcome?
-The candidate failed to provide a specific example or details about their approach to system optimization. They mentioned working at large companies and smaller startups, but did not provide any relevant information about optimizing performance.
-Score: 2 (Below Average)
+    // Dynamically handle overall assessment categories
+    Object.entries(reportCard.overallAssessment).forEach(
+      ([key, assessment]) => {
+        const title = key
+          .split(/(?=[A-Z])/)
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(" ");
 
-Question: Tell me about a time when you had to write code for a complex API. How did you ensure its simplicity and effectiveness?
-The candidate provided a vague description of API development without addressing simplicity or effectiveness. They mentioned working with Golang and Next.js, but did not provide any specific examples or details about API design.
-Score: 2 (Below Average)
+        markdown += `### ${title}: `;
 
-Question: How do you approach coding in a collaborative environment? Can you give an example of a successful project you worked on with a team where you received feedback and made adjustments?
-The candidate mentioned a team project, but lacked concrete examples or specific details about collaborative activities. They showed some willingness to receive feedback, but did not provide any examples of adjustments made.
-Score: 3 (Average)
+        if (assessment.score !== undefined) {
+          markdown += `${assessment.score}/5 `;
+        }
 
-Question: Tell me about a time when you identified a problem or inefficiency in a project or process and suggested a solution. What was the outcome?
-The candidate mentioned a problem or inefficiency, but lacked specific details or results. They suggested a solution, but did not communicate effectively with team members or document the impact of the solution.
-Score: 3 (Average)
+        markdown += "\n";
 
-Question: Can you walk me through how you approach learning and staying current with new technologies and methodologies in software development?
-The candidate mentioned a desire to learn new technologies, but lacked concrete examples or results. They did not provide any specific details about self-directed learning or exploring new tools and techniques.
-Score: 3 (Average)
+        if (Array.isArray(assessment.comments)) {
+          assessment.comments.forEach((comment) => {
+            markdown += `- ${comment}\n`;
+          });
+        } else if (typeof assessment.comments === "string") {
+          markdown += `- ${assessment.comments}\n`;
+        }
 
-Question: Tell me about a time when you had to handle a difficult situation or customer complaint. How did you resolve it?
-The candidate failed to describe any experience handling difficult situations. They did not show empathy or understanding, and did not provide effective solutions or communication.
-Score: 2 (Below Average)
+        markdown += "\n";
+      }
+    );
 
-Question: Can you describe your experience with Golang and Next.js, and how you approach using these technologies in software development?
-The candidate mentioned experience with Golang and Next.js, but did not provide specific examples or details about best practices and principles.
-Score: 3 (Average)
+    if (reportCard.overallScore !== undefined) {
+      markdown += `## Overall Score: ${reportCard.overallScore}/5\n\n`;
+    }
 
-Overall assessment:
-Overall Performance:
-Strengths: The candidate has 10 years of experience in software engineering, and has worked at both large companies and smaller startups.
-Areas for Improvement: The candidate needs to provide more specific examples and details about their experience in system optimization, API development, collaboration, and problem-solving. They also need to demonstrate a stronger understanding of Groq's mission and culture.
-Overall Score: 67% (B- grade)
+    if (reportCard.summary !== undefined) {
+      markdown += `## Summary: ${reportCard.summary}\n\n`;
+    }
 
-Recommendations:
-To improve your interview performance, consider the following:
+    if (
+      Array.isArray(reportCard.recommendations) &&
+      reportCard.recommendations.length > 0
+    ) {
+      markdown += `## Recommendations\n\n`;
+      reportCard.recommendations.forEach((recommendation, index) => {
+        markdown += `${index + 1}. ${recommendation}\n`;
+      });
+    }
+    return markdown;
+  }
 
-1. Provide more specific examples and details about your experience in system optimization, API development, and collaboration.
-2. Demonstrate a stronger understanding of Groq's mission and culture, and be prepared to discuss how your skills and experience align with the company's values.
-3. Practice answering behavioral interview questions in a more concise and specific way.
-4. Emphasize your attention to detail and ability to work effectively in a remote environment.
-5. Show enthusiasm for learning new technologies and approaches, and provide specific examples of self-directed learning and professional development activities.
+  const markdownContent = reportCardJSON
+    ? convertReportCardToMarkdown(reportCardJSON)
+    : "";
 
-Note: Based on the final grading scale, this candidate would receive a B- grade, meaning they are a strong candidate who demonstrates proficiency in most areas but may need development in some areas.`
+    return (
+      <div className="w-full max-w-2xl mx-auto">
+        <MdDisplay content={markdownContent} title="Report Card" />
+      </div>
+    );
+  }
 
 export default function Home() {
   const [company, setCompany] = useState("");
@@ -63,7 +179,7 @@ export default function Home() {
   const [isReadyForInterview, setIsReadyForInterview] = useState(false);
   const [conversationState, setConversationState] = useState("inactive");
   const [callId, setCallId] = useState("");
-  const [reportCard, setReportCard] = useState(sampleReportCard);
+  const [reportCard, setReportCard] = useState("");
   const [interviewFinished, setInterviewFinished] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [transcript, setTranscript] = useState("");
@@ -200,7 +316,7 @@ export default function Home() {
   const generateReportCard = async () => {
     try {
       // Fetch transcript
-      console.log({callId})
+      console.log({ callId });
       const transcriptResponse = await fetch(
         `http://127.0.0.1:8000/api/v1/vapi/fetch_transcript?call_id=${callId}`,
         {
@@ -212,10 +328,17 @@ export default function Home() {
       );
       const transcriptData = await transcriptResponse.json();
       setTranscript(transcriptData.transcript);
-      console.log({transcript})
+      console.log({ transcript });
 
       // Generate report card
-      console.log({jobDescription, jobTitle, company, questions, overallRubric, transcript})
+      console.log({
+        jobDescription,
+        jobTitle,
+        company,
+        questions,
+        overallRubric,
+        transcript,
+      });
       const reportCardResponse = await fetch(
         "http://127.0.0.1:8000/api/v1/doc_gen/generate_report_card",
         {
@@ -235,8 +358,10 @@ export default function Home() {
         }
       );
       const reportCardData = await reportCardResponse.json();
-      console.log({reportCardData})
-      setReportCard(reportCardData.report_card);
+      console.log({ reportCardData });
+      setReportCard(reportCardData);
+      console.log({ reportCard });
+
     } catch (error) {
       console.error("Error generating report card:", error);
     }
@@ -246,7 +371,7 @@ export default function Home() {
     <Layout>
       <div className="hero min-h-screen bg-base-200">
         <div className="hero-content text-center">
-          <div className="max-w-md">
+          <div className="w-full max-w-4xl">
             <h1 className="text-5xl font-bold">Welcome to Dream Job! 🌟</h1>
             <p className="py-6">
               Prepare for your dream job with our mock interview platform.
@@ -257,6 +382,7 @@ export default function Home() {
                 Use Template
               </button>
             </div>
+            <div>
             <input
               type="text"
               placeholder="Company"
@@ -264,6 +390,8 @@ export default function Home() {
               onChange={(e) => setCompany(e.target.value)}
               className="input input-bordered w-full max-w-xs mb-4"
             />
+            </div>
+            <div>
             <input
               type="text"
               placeholder="Job Title"
@@ -271,13 +399,16 @@ export default function Home() {
               onChange={(e) => setJobTitle(e.target.value)}
               className="input input-bordered w-full max-w-xs mb-4"
             />
+            </div>
+            <div>
             <textarea
               placeholder="Job Description"
               value={jobDescription}
               onChange={(e) => setJobDescription(e.target.value)}
               className="textarea textarea-bordered w-full max-w-xs mb-4"
-              rows="10"
-            />
+                rows="10"
+              />
+            </div>
             <div className="flex justify-center">
               <button
                 className="btn btn-primary"
@@ -327,10 +458,7 @@ export default function Home() {
               />
             )}
             {reportCard && !isSubmitting && (
-              <MdDisplay
-                content={reportCard}
-                title="Report Card"
-              />
+              <ReportCardDisplay reportCardJSON={reportCard} />
             )}
           </div>
         </div>

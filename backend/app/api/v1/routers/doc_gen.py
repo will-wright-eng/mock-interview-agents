@@ -112,8 +112,10 @@ async def generate_report_card(request: Request):
             },
         ],
         model=settings.GROQ_MODEL,
+        response_format={"type": "json_object"}
     )
     report_card = report_card_completion.choices[0].message.content
     logger.info(f"Report card: {report_card}")
-    return {"report_card": report_card}
+    report_card_parsed = json.loads(report_card)
+    return report_card_parsed
 
