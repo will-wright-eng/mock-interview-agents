@@ -445,7 +445,7 @@ export default function Home() {
               </>
             )}
 
-            {questions && !isSubmitting && (
+            {/* {questions && !isSubmitting && (
               <MdDisplay
                 content={JSON.stringify(questions, null, 2)}
                 title="Generated Questions"
@@ -456,7 +456,7 @@ export default function Home() {
                 content={JSON.stringify(overallRubric, null, 2)}
                 title="Overall Rubric"
               />
-            )}
+            )} */}
             {reportCard && !isSubmitting && (
               <ReportCardDisplay reportCardJSON={reportCard} />
             )}
