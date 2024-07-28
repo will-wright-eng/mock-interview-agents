@@ -88,7 +88,6 @@ export default function Home() {
   const [transcript, setTranscript] = useState("");
 
   const useTemplate = () => {
-    console.log({ sampleData });
     setCompany(sampleData.company);
     setJobTitle(sampleData.jobTitle);
     setJobDescription(sampleData.jobDescription);
@@ -96,8 +95,7 @@ export default function Home() {
   };
 
   useEffect(() => {
-    console.log("isReadyForInterview:", isReadyForInterview);
-    console.log("questions:", questions);
+    console.log({ questions });
   }, [isReadyForInterview, questions]);
 
   const generateQuestionsAndRubric = async () => {
@@ -348,12 +346,13 @@ export default function Home() {
               </>
             )}
 
-            {/* {questions && !isSubmitting && (
+            {questions && !reportCard && !isSubmitting && (
               <MdDisplay
                 content={JSON.stringify(questions, null, 2)}
                 title="Generated Questions"
               />
             )}
+            {/* 
             {overallRubric && !isSubmitting && (
               <MdDisplay
                 content={JSON.stringify(overallRubric, null, 2)}
