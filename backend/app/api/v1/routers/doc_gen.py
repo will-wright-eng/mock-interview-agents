@@ -62,11 +62,11 @@ async def generate_questions_and_rubric(request: Request):
             },
         ],
         model=settings.GROQ_MODEL,
-        # response_format={"type": "json_object"}
+        response_format={"type": "json_object"}
     )
     questions = questions_completion.choices[0].message.content
+    logger.info(f"{questions}")
     questions_parsed = json.loads(questions)
-    logger.info(f"Questions: {questions_parsed}")
     return questions_parsed
 
 
