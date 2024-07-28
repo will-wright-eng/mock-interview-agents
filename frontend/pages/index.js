@@ -228,7 +228,9 @@ export default function Home() {
         }
       );
       const transcriptData = await transcriptResponse.json();
-      setTranscript(transcriptData.transcript);
+      console.log({ transcriptData });
+      let transcript = transcriptData.transcript;
+      // setTranscript(transcriptData.transcript);
       console.log({ transcript });
 
       // Generate report card
