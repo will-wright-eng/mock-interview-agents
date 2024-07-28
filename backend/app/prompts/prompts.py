@@ -8,23 +8,23 @@ First, carefully read and analyze the given job description. Based on the job de
 2. For each question, create a grading criteria that includes:
    a) Key points the candidate should cover in their answer
    b) Skills or qualities the answer should demonstrate
-   c) A scoring system (e.g., 1-5 scale) with descriptions for each score level
+   c) A scoring system using a 1-5 scale with descriptions for each score level
 
 3. Develop an overall rubric for the entire interview that includes:
    a) Criteria for evaluating the candidate's overall performance
    b) Weightings for different aspects of the interview (e.g., content of answers, communication skills, etc.)
-   c) A scoring system to determine the final grade (e.g., A, B, C, D, or F)
+   c) A scoring system to determine the final grade using a 1-5 scale with descriptions for each score level
 
 Each question should have the following data:
 - Question content
 - Key points 
 - Skills quality to demonstrate
-  - Scoring:
-     5 - Excellent: [Description]
-     4 - Good: [Description]
-     3 - Average: [Description]
-     2 - Below Average: [Description]
-     1 - Poor: [Description]
+- Scoring:
+   5 - Excellent: [Description]
+   4 - Good: [Description]
+   3 - Average: [Description]
+   2 - Below Average: [Description]
+   1 - Poor: [Description]
 
 Include an overall rubric for the interview as well:
 1. Evaluation Criteria:
@@ -32,12 +32,7 @@ Include an overall rubric for the interview as well:
    b) [Criterion 2]: [Description and weighting]
    [Continue for all criteria]
 
-2. Final Grading Scale:
-   A (90-100%): [Description]
-   B (80-89%): [Description]
-   C (70-79%): [Description]
-   D (60-69%): [Description]
-   F (0-59%): [Description]
+2. Final Grading Scale from 1-5
 
 Ensure that your questions, grading criteria, and overall rubric are tailored to the specific job description provided. Focus on assessing the key skills, experiences, and qualities mentioned in the job posting.
 
@@ -47,81 +42,58 @@ Return your response as a JSON string, using the following JSON structure as an 
     {
       "question": "Can you describe a time when you had to optimize the performance of a system or application? What was your approach, and what was the outcome?",
       "keyPoints": [
-        "Identified performance bottlenecks",
-        "Implemented optimization techniques",
-        "Measured and quantified improvements",
-        "Collaborated with team members"
+        "Key point 1",
+        "Key point 2",
+        ...
       ],
-      "skillsToDemo": ["System Optimization", "Problem-solving", "Attention to Detail"],
+      "skillsToDemo": ["Skill 1", "Skill 2", "Skill 3"],
       "scoring": {
-        "5": "Excellent: Demonstrates deep understanding of performance optimization techniques, provides specific examples with measurable outcomes, and shows collaborative problem-solving skills.",
-        "4": "Good: Provides a clear example of performance optimization with some measurable results, but may lack depth in some areas.",
-        "3": "Average: Describes a basic performance optimization scenario but lacks specific details or significant measurable outcomes.",
-        "2": "Below Average: Provides a vague or irrelevant example of performance optimization without clear results.",
-        "1": "Poor: Unable to provide an example of performance optimization or demonstrates a lack of understanding of the concept."
-      }
-    },
-    {
-      "question": "Tell me about a time when you had to write code for a complex API. How did you ensure its simplicity and effectiveness?",
-      "keyPoints": [
-        "Understood API requirements",
-        "Designed clear and intuitive endpoints",
-        "Implemented error handling and informative messages",
-        "Documented the API thoroughly"
-      ],
-      "skillsToDemo": ["Software Development", "API Design", "Attention to Detail"],
-      "scoring": {
-        "5": "Excellent: Demonstrates strong API design principles, emphasizes simplicity and effectiveness, provides specific examples of error handling and documentation.",
-        "4": "Good: Describes a well-designed API with consideration for simplicity, but may lack depth in one area (e.g., error handling or documentation).",
-        "3": "Average: Provides a basic example of API development but lacks emphasis on simplicity or effectiveness.",
-        "2": "Below Average: Gives a vague description of API development without addressing simplicity or effectiveness.",
-        "1": "Poor: Unable to provide an example of API development or shows a lack of understanding of API design principles."
+        "5": "Excellent: [Description]",
+        "4": "Good: [Description]",
+        "3": "Average: [Description]",
+        "2": "Below Average: [Description]",
+        "1": "Poor: [Description]"
       }
     },
   ],
   "overallRubric": {
     "evaluationCriteria": [
       {
-        "criterion": "Technical Skills",
-        "description": "Demonstrates strong software development abilities, system optimization skills, and API design knowledge.",
-        "weighting": 0.3
+        "criterion": "Criterion 1",
+        "description": "Description 1",
       },
       {
-        "criterion": "Problem-solving and Decision-making",
-        "description": "Shows ability to analyze complex problems, make informed decisions, and implement effective solutions.",
-        "weighting": 0.25
+        "criterion": "Criterion 2",
+        "description": "Description 2",
       },
       {
-        "criterion": "Learning Agility and Curiosity",
-        "description": "Exhibits enthusiasm for learning new technologies and approaches, with a growth mindset.",
-        "weighting": 0.2
+        "criterion": "Criterion 3",
+        "description": "Description 3",
       },
       {
-        "criterion": "Collaboration and Communication",
-        "description": "Demonstrates strong teamwork skills, clear communication, and ability to work effectively in a remote environment.",
-        "weighting": 0.15
+        "criterion": "Criterion 4",
+        "description": "Description 4",
       },
       {
-        "criterion": "Alignment with Company Values",
-        "description": "Shows humility, passion for AI and technology, and alignment with Groq's mission and culture.",
-        "weighting": 0.1
+        "criterion": "Criterion 5",
+        "description": "Description 5",
       }
     ],
     "finalGradingScale": {
       "5": {
-        "description": "Exceptional candidate who excels in all areas and shows strong potential to make significant contributions to Groq."
+        "description": "Description 5"
       },
       "4": {
-        "description": "Strong candidate who demonstrates proficiency in most areas and aligns well with Groq's needs and culture."
+        "description": "Description 4"
       },
       "3": {
-        "description": "Competent candidate who meets basic requirements but may need development in some areas."
+        "description": "Description 3"
       },
       "2": {
-        "description": "Candidate who falls short in multiple areas and may not be a good fit for the role or company culture."
+        "description": "Description 2"
       },
       "1": {
-        "description": "Candidate who does not meet the minimum requirements for the position and is not recommended for further consideration."
+        "description": "Description 1"
       }
     }
   }
