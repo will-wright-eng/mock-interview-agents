@@ -1,0 +1,42 @@
+services:
+  backend:
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    tty: &default-tty true
+    volumes:
+    - ./backend:/app/:cached
+    env_file: .env
+    command: uvicorn app.main:app --host 0.0.0.0 --port ${BACKEND_PORT} --reload
+    ports:
+    - "${BACKEND_PORT}:${BACKEND_PORT}"
+    restart: &default-restart on-failure
+
+  frontend:
+    build:
+      context: frontend
+      dockerfile: local.dockerfile
+    tty: *default-tty
+    ports:
+    - "${FRONTEND_PORT}:${FRONTEND_PORT}"
+    volumes:
+    - ./frontend/pages:/app/pages
+    - ./frontend/components:/app/components
+    environment:
+    - NODE_ENV=development
+    command: npm run dev
+    restart: *default-restart
+
+  nginx:
+    build:
+      context: nginx
+      dockerfile: Dockerfile
+      args:
+        NGINX_CONF: nginx.conf
+    tty: false
+    ports:
+    - "80:80"
+    restart: *default-restart
+    depends_on:
+    - frontend
+    - backend
