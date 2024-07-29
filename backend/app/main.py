@@ -3,11 +3,11 @@ import os
 from fastapi import FastAPI, Request
 from vapi_python import Vapi
 from groq import Groq
-from fastapi.middleware.cors import CORSMiddleware
+# from fastapi.middleware.cors import CORSMiddleware
 
-from .core.log import logger
-from .core.config import settings
-from .api.v1.routers import test, vapi, doc_gen
+from app.core.log import logger
+from app.core.config import settings
+from app.api.v1.routers import test, vapi, doc_gen
 
 app = FastAPI(title=settings.PROJECT_NAME, docs_url="/api/docs", openapi_url="/api")
 
@@ -59,10 +59,10 @@ app.include_router(
     tags=["vapi"],
 )
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins
-    allow_credentials=True,
-    allow_methods=["*"],  # Allow all methods
-    allow_headers=["*"],  # Allow all headers
-)
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=["*"],  # Allow all origins
+#     allow_credentials=True,
+#     allow_methods=["*"],  # Allow all methods
+#     allow_headers=["*"],  # Allow all headers
+# )
