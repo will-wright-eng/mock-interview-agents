@@ -7,9 +7,7 @@ from app.core.log import logger
 from app.prompts.prompts import *
 
 
-router = r = APIRouter(
-    prefix="/doc_gen",
-)
+router = r = APIRouter()
 
 
 class ChatRequest(BaseModel):

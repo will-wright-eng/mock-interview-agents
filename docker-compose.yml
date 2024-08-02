@@ -11,6 +11,10 @@ services:
     ports:
     - "${BACKEND_PORT}:${BACKEND_PORT}"
     restart: &default-restart on-failure
+    environment:
+    - PULSE_SERVER=host.docker.internal
+    devices:
+    - "/dev/snd:/dev/snd"
 
   frontend:
     build:

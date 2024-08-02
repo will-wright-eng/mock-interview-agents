@@ -120,7 +120,7 @@ export default function Home() {
   const generateQuestionsAndRubric = async () => {
     try {
       const response = await fetch(
-        "http://127.0.0.1:8000/api/v1/doc_gen/generate_questions_and_rubric",
+        "/api/doc_gen/generate_questions_and_rubric",
         {
           method: "POST",
           headers: {
@@ -182,7 +182,7 @@ export default function Home() {
     setInterviewFinished(false);
     try {
       console.log({ jobDescription, jobTitle, company, questions });
-      const response = await fetch("http://127.0.0.1:8000/api/v1/vapi/start", {
+      const response = await fetch("/api/vapi/start", {
         method: "POST",
         headers: {
           accept: "application/json",
@@ -211,7 +211,7 @@ export default function Home() {
   const stopInterview = async () => {
     setConversationState("inactive");
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/v1/vapi/stop", {
+      const response = await fetch("/api/vapi/stop", {
         method: "POST",
         headers: {
           accept: "application/json",
@@ -238,7 +238,7 @@ export default function Home() {
       // Fetch transcript
       console.log({ callId });
       const transcriptResponse = await fetch(
-        `http://127.0.0.1:8000/api/v1/vapi/fetch_transcript?call_id=${callId}`,
+        `/api/vapi/fetch_transcript?call_id=${callId}`,
         {
           method: "POST",
           headers: {
@@ -261,7 +261,7 @@ export default function Home() {
         transcript,
       });
       const reportCardResponse = await fetch(
-        "http://127.0.0.1:8000/api/v1/doc_gen/generate_report_card",
+        "/api/doc_gen/generate_report_card",
         {
           method: "POST",
           headers: {
