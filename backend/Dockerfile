@@ -4,6 +4,11 @@ WORKDIR /app
 
 ARG YOUR_ENV=production
 
+# Install system dependencies
+RUN apt-get update
+RUN apt-get install libasound-dev libportaudio2 libportaudiocpp0 portaudio19-dev -y
+COPY asound.conf /etc/asound.conf
+
 ENV YOUR_ENV=${YOUR_ENV} \
   PYTHONFAULTHANDLER=1 \
   PYTHONUNBUFFERED=1 \
@@ -19,15 +24,8 @@ ENV YOUR_ENV=${YOUR_ENV} \
   POETRY_VERSION=1.8.3
 
 RUN curl -sSL https://install.python-poetry.org | python3 -
-
 COPY poetry.lock .
 COPY pyproject.toml .
-
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    portaudio19-dev \
-    && rm -rf /var/lib/apt/lists/*
-
 RUN poetry install $(test "$YOUR_ENV" == production && echo "--only=main") --no-interaction --no-ansi
 
 COPY ./app /app

@@ -8,9 +8,7 @@ from app.core.log import logger
 
 from app.core.config import settings
 
-router = r = APIRouter(
-    prefix="/vapi",
-)
+router = r = APIRouter()
 
 sample_assistant_overrides = {
     "variableValues": {
@@ -104,8 +102,8 @@ def stop_vapi(request: Request):
 async def fetch_transcript(request: Request):
     call_id = request.query_params.get("call_id")
     url = f"https://api.vapi.ai/call/{call_id}"
-    private_api_key = "72350235-1452-427e-b987-b7b96766a777"
-    headers = {"Authorization": f"Bearer {private_api_key}"}
+    # private_api_key = "72350235-1452-427e-b987-b7b96766a777"
+    headers = {"Authorization": f"Bearer {settings.VAPI_API_KEY_PRIVATE}"}
     logger.info(f"Fetching transcript for call_id: {call_id}")
     try:
         
@@ -117,3 +115,17 @@ async def fetch_transcript(request: Request):
         return {"transcript": transcript}
     except Exception as e:
         return {"error": str(e)}
+
+@r.get("/info")
+def info():
+    # try:
+    import pyaudio
+    pa = pyaudio.PyAudio()
+    return {
+        "get_default_output_device_info": pa.get_default_output_device_info(),
+        "file": pa.__file__
+    }
+    # except Exception as e:
+    #     return {"error": str(e)}
+    # finally:
+    #     pa.terminate()

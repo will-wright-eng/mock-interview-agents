@@ -2,6 +2,12 @@
 
 ## run system
 
+### with docker
+
+```bash
+make local
+```
+
 ### without docker
 
 ```bash

@@ -24,34 +24,29 @@ async def log_requests(request: Request, call_next):
 @app.on_event("startup")
 async def startup_event():
     logger.info("Application startup")
-    app.state.vapi = Vapi(api_key=settings.VAPI_API_KEY)
+    app.state.vapi = Vapi(api_key=settings.VAPI_API_KEY_PUBLIC)
     app.state.groq = Groq(api_key=settings.GROQ_API_KEY)
 
 
-@app.get("/api/v1")
+@app.get("/")
 async def root():
     return {"message": "Hello World"}
-
-
-@app.get("/api/v1/info")
-async def info():
-    return settings.model_dump()
 
 
 # Routers
 app.include_router(
     test.router,
-    prefix="/api/v1",
+    prefix="",
     tags=["test"],
 )
 app.include_router(
     doc_gen.router,
-    prefix="/api/v1",
+    prefix="/doc_gen",
     tags=["doc_gen"],
 )
 
 app.include_router(
     vapi.router,
-    prefix="/api/v1",
+    prefix="/vapi",
     tags=["vapi"],
 )
